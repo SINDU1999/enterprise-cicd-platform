@@ -1,47 +1,34 @@
 pipeline {
-    agent any
-
-    environment {
-        AWS_REGION = "ap-south-1"
-        ECR_REPOSITORY = "enterprise-nginx"
+    agent {
+        kubernetes {
+            label 'kaniko'
+        }
     }
 
     stages {
 
-        stage('Checkout Source') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Verify IRSA') {
+        stage('Verify Kaniko Agent') {
             steps {
                 sh '''
-                echo "===== AWS Identity ====="
-                aws sts get-caller-identity --no-cli-pager
+                echo "===== Running Inside Kaniko Pod ====="
 
-                echo ""
-                echo "===== EKS Nodes ====="
-                aws eks update-kubeconfig \
-                  --name cockroach-platform-dev-eks \
-                  --region ap-south-1
+                echo "Current User:"
+                whoami || true
 
-                kubectl get nodes
+                echo "AWS Identity:"
+                AWS_PAGER="" aws sts get-caller-identity
 
-                echo ""
-                echo "===== ECR ====="
-                aws ecr describe-repositories \
-                  --repository-names enterprise-nginx \
-                  --region ap-south-1
+                echo "Executor:"
+                ls /
+
+                echo "Kaniko:"
+                ls /kaniko
+
+                echo "Workspace:"
+                pwd
                 '''
             }
         }
 
-    }
-
-    post {
-        success {
-            echo "IRSA verification successful."
-        }
     }
 }
