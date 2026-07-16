@@ -1,0 +1,37 @@
+controller:
+  image:
+    registry: 827257543859.dkr.ecr.ap-south-1.amazonaws.com
+    repository: enterprise-jenkins
+    tag: v1
+    pullPolicy: Always
+
+  admin:
+    username: admin
+    password: Admin@123
+
+  serviceType: ClusterIP
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+
+  installPlugins:
+    - kubernetes
+    - workflow-aggregator
+    - git
+    - github
+    - docker-workflow
+    - configuration-as-code
+    - pipeline-stage-view
+
+agent:
+  enabled: true
+
+persistence:
+  enabled: true
+  storageClass: gp2
+  size: 10Gi
