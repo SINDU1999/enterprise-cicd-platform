@@ -7,26 +7,28 @@ pipeline {
 
     stages {
 
-        stage('Verify Kaniko Agent') {
+        stage('Verify Kaniko') {
             steps {
-                sh '''
-                echo "===== Running Inside Kaniko Pod ====="
+                container('kaniko') {
+                    sh '''
+                        echo "===== Running Inside Kaniko Pod ====="
 
-                echo "Current User:"
-                whoami || true
+                        echo "Current User:"
+                        whoami
 
-                echo "AWS Identity:"
-                AWS_PAGER="" aws sts get-caller-identity
+                        echo "Working Directory:"
+                        pwd
 
-                echo "Executor:"
-                ls /
+                        echo "Root Directory:"
+                        ls -la /
 
-                echo "Kaniko:"
-                ls /kaniko
+                        echo "Kaniko Directory:"
+                        ls -la /kaniko
 
-                echo "Workspace:"
-                pwd
-                '''
+                        echo "Kaniko Version:"
+                        /kaniko/executor version || true
+                    '''
+                }
             }
         }
 
