@@ -13,10 +13,7 @@ pipeline {
                     sh '''
                         echo "===== Running Inside Kaniko Pod ====="
 
-                        echo "Current User:"
-                        whoami
-
-                        echo "Working Directory:"
+                        echo "Current Directory:"
                         pwd
 
                         echo "Root Directory:"
