@@ -1,27 +1,22 @@
-#!/bin/bash
+#!/bin/sh
 
-set -e
-
-echo "=========================================="
-echo "Enterprise AWS CockroachDB Platform"
-echo "Database Operations Validation"
-echo "=========================================="
+echo "========== Database Operations =========="
 
 echo ""
-echo "Checking CockroachDB namespace..."
-kubectl get namespace cockroachdb
-
-echo ""
-echo "Checking CockroachDB pods..."
+echo "Checking CockroachDB Pods..."
 kubectl get pods -n cockroachdb
 
 echo ""
-echo "Checking CockroachDB StatefulSet..."
+echo "Checking StatefulSet..."
 kubectl get statefulset -n cockroachdb
 
 echo ""
-echo "Checking CockroachDB services..."
+echo "Checking Services..."
 kubectl get svc -n cockroachdb
 
 echo ""
-echo "Database Operations Validation Completed Successfully"
+echo "Checking Persistent Volumes..."
+kubectl get pvc -n cockroachdb
+
+echo ""
+echo "Database Operations Completed."
