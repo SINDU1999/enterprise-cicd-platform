@@ -28,6 +28,16 @@ controller:
     - configuration-as-code
     - pipeline-stage-view
 
+  additionalVolumes:
+    - name: aws-credentials
+      secret:
+        secretName: aws-credentials
+
+  additionalVolumeMounts:
+    - name: aws-credentials
+      mountPath: /var/jenkins_home/.aws
+      readOnly: true
+
 agent:
   enabled: true
 

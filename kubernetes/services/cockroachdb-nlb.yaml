@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cockroachdb-nlb
+  namespace: cockroachdb
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+
+spec:
+  type: LoadBalancer
+
+  selector:
+    app.kubernetes.io/component: cockroachdb
+    app.kubernetes.io/instance: cockroachdb
+    app.kubernetes.io/name: cockroachdb
+
+  ports:
+    - name: grpc
+      port: 26257
+      targetPort: grpc
+      protocol: TCP
