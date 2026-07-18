@@ -10,6 +10,8 @@ rules:
     - pods
     - pods/exec
     - services
+    - endpoints
+    - events
     - persistentvolumeclaims
   verbs:
     - get

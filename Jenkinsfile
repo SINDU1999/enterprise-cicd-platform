@@ -28,5 +28,14 @@ pipeline {
             }
         }
 
+        stage('Deployment Validation') {
+            steps {
+                sh '''
+                    chmod +x scripts/deployment-validation.sh
+                    ./scripts/deployment-validation.sh
+                '''
+            }
+        }
+
     }
 }
