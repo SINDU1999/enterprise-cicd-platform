@@ -12,8 +12,12 @@ pipeline {
 
         stage('Database Operations') {
             steps {
-                sh './scripts/database-operations.sh'
+                sh '''
+                    chmod +x scripts/database-operations.sh
+                    ./scripts/database-operations.sh
+                '''
             }
         }
+
     }
 }
