@@ -19,5 +19,14 @@ pipeline {
             }
         }
 
+        stage('Execute Query') {
+            steps {
+                sh '''
+                    chmod +x scripts/execute-query.sh
+                    ./scripts/execute-query.sh
+                '''
+            }
+        }
+
     }
 }
