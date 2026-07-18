@@ -37,5 +37,14 @@ pipeline {
             }
         }
 
+        stage('Backup Verification') {
+            steps {
+                sh '''
+                    chmod +x scripts/backup-verification.sh
+                    ./scripts/backup-verification.sh
+                '''
+            }
+        }
+
     }
 }
