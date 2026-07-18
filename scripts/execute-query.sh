@@ -12,25 +12,32 @@ POD=$(kubectl get pods -n cockroachdb \
 echo "Using Pod: $POD"
 
 echo ""
-echo "Cluster Nodes:"
+echo "Displaying Databases..."
 kubectl exec -n cockroachdb $POD -- \
-  cockroach sql \
-  --insecure \
-  --execute="SELECT node_id, is_live FROM crdb_internal.kv_node_status;"
+cockroach sql \
+--insecure \
+--execute="SHOW DATABASES;"
 
 echo ""
-echo "Databases:"
+echo "Current Database..."
 kubectl exec -n cockroachdb $POD -- \
-  cockroach sql \
-  --insecure \
-  --execute="SHOW DATABASES;"
+cockroach sql \
+--insecure \
+--execute="SELECT current_database();"
 
 echo ""
-echo "Cluster Version:"
+echo "Current User..."
 kubectl exec -n cockroachdb $POD -- \
-  cockroach sql \
-  --insecure \
-  --execute="SHOW CLUSTER SETTING version;"
+cockroach sql \
+--insecure \
+--execute="SELECT current_user;"
 
 echo ""
-echo "Execute Query Completed."
+echo "Cluster Version..."
+kubectl exec -n cockroachdb $POD -- \
+cockroach sql \
+--insecure \
+--execute="SHOW CLUSTER SETTING version;"
+
+echo ""
+echo "Execute Query Completed Successfully."
