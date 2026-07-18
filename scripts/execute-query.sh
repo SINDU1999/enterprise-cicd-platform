@@ -16,7 +16,7 @@ echo "Cluster Nodes:"
 kubectl exec -n cockroachdb $POD -- \
   cockroach sql \
   --insecure \
-  --execute="SHOW NODES;"
+  --execute="SELECT node_id, is_live FROM crdb_internal.kv_node_status;"
 
 echo ""
 echo "Databases:"
